@@ -12,20 +12,24 @@ router.get('/', (req, res) => {
             res.send(dbRes.rows);
         })
         .catch((err) => {
-            console.log('', err);
+            console.log('GET error:', err);
             res.sendStatus(500);
         });
 });
 
 // POST /treats
 router.post('/', (req, res) => {
-    const query = ``;
+    const query = `INSERT INTO treats (name, description, pic)
+                    VALUES ($1, $2, $3);`;
+    console.log(req.body);
 
     pool
-        .query(query)
-        .then((dbRes) => {})
+        .query(query, [req.body.name, req.body.description, req.body.pic])
+        .then((dbRes) => {
+            res.sendStatus(201);
+        })
         .catch((err) => {
-            console.log('', err);
+            console.log('POST error:', err);
             res.sendStatus(500);
         });
 });
