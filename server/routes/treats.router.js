@@ -44,20 +44,22 @@ router.put('/:id', (req, res) => {
             res.sendStatus(200);
         })
         .catch((err) => {
-            console.log('', err);
+            console.log('PUT error:', err);
             res.sendStatus(500);
         });
 });
 
 // DELETE /treats/<id>
-router.delete('/', (req, res) => {
-    const query = ``;
+router.delete('/:id', (req, res) => {
+    const query = `DELETE FROM treats WHERE id = $1;`;
 
     pool
-        .query(query)
-        .then((dbRes) => {})
+        .query(query, [req.params.id])
+        .then((dbRes) => {
+            res.sendStatus(200);
+        })
         .catch((err) => {
-            console.log('', err);
+            console.log('DELETE error:', err);
             res.sendStatus(500);
         });
 });
