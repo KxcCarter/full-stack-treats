@@ -35,12 +35,14 @@ router.post('/', (req, res) => {
 });
 
 // PUT /treats/<id>
-router.put('/', (req, res) => {
-    const query = ``;
+router.put('/:id', (req, res) => {
+    const query = `UPDATE treats SET description = $1 WHERE id = $2;`;
 
     pool
-        .query(query)
-        .then((dbRes) => {})
+        .query(query, [req.body.description, req.params.id])
+        .then((dbRes) => {
+            res.sendStatus(200);
+        })
         .catch((err) => {
             console.log('', err);
             res.sendStatus(500);
