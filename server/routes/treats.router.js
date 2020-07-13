@@ -4,11 +4,13 @@ const pool = require('../modules/pool');
 // GET /treats
 
 router.get('/', (req, res) => {
-    const query = ``;
+    const query = `SELECT * FROM treats`;
 
     pool
         .query(query)
-        .then((dbRes) => {})
+        .then((dbRes) => {
+            res.send(dbRes.rows);
+        })
         .catch((err) => {
             console.log('', err);
             res.sendStatus(500);
